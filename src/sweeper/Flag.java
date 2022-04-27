@@ -3,15 +3,55 @@ package sweeper;
 class Flag {
 
     private Matrix flagMap;
+    private int countOfClosedBoxes;
 
     void start() {
         flagMap = new Matrix(Box.CLOSED);
-        for (Coord around : Ranges.getCoordsAround(new Coord(4, 4))) {
-            flagMap.set(around, Box.OPENED);
-        }
+        countOfClosedBoxes = Ranges.getSize().x * Ranges.getSize().y;
     }
 
     Box get(Coord coord) {
         return flagMap.get(coord);
+    }
+
+    void setOpenedToBox(Coord coord) {
+        flagMap.set(coord, Box.OPENED);
+        countOfClosedBoxes--;
+    }
+
+
+    public void toggleFlagedToBox(Coord coord) {
+        switch (flagMap.get(coord)) {
+            case FLAGED -> setClosedToBox(coord);
+            case CLOSED -> setFlagedToBox(coord);
+        }
+    }
+
+    void setClosedToBox(Coord coord) {
+        flagMap.set(coord, Box.CLOSED);
+    }
+
+    private void setFlagedToBox(Coord coord) {
+        flagMap.set(coord, Box.FLAGED);
+    }
+
+    int getCountOfCloseBoxes() {
+        return countOfClosedBoxes;
+    }
+
+    void setBombedToBox(Coord coord) {
+        flagMap.set(coord, Box.BOMBED);
+    }
+
+    void setOpenedToClosedBombBox(Coord coord) {
+        if (flagMap.get(coord) == Box.CLOSED) {
+            flagMap.set(coord, Box.OPENED);
+        }
+    }
+
+    void setNobombToFlagedSafeBox(Coord coord) {
+        if (flagMap.get(coord) == Box.FLAGED) {
+            flagMap.set(coord, Box.NOBOMB);
+        }
     }
 }

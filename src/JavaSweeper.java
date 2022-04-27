@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import sweeper.Box;
 import sweeper.Coord;
@@ -9,6 +11,7 @@ import sweeper.Ranges;
 public class JavaSweeper extends JFrame {
     private Game game;
     private JPanel panel;
+    private JLabel label;
     private final int COLS = 9;
     private final int ROWS = 9;
     private final int BOMBS = 10;
@@ -23,8 +26,14 @@ public class JavaSweeper extends JFrame {
         game = new Game(COLS, ROWS, BOMBS);
         game.start();
         setImages();
+        initLabel();
         initPanel();
         initFrame();
+    }
+
+    private void initLabel(){
+        label = new JLabel("Welcome!");
+        add(label, BorderLayout.SOUTH);
     }
 
 
@@ -39,10 +48,38 @@ public class JavaSweeper extends JFrame {
                 }
             }
         };
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX() / IMAGE_SIZE;
+                int y = e.getY() / IMAGE_SIZE;
+                Coord coord = new Coord(x,y);
+                if (e.getButton() == MouseEvent.BUTTON1){
+                    game.pressLeftButton(coord);
+                }
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    game.pressRightButton(coord);
+                }
+                if(e.getButton() == MouseEvent.BUTTON2){
+                    game.start();
+                }
+                label.setText(getMessage());
+                panel.repaint();
+            }
+        });
         panel.setPreferredSize(new Dimension(
                 Ranges.getSize().x * IMAGE_SIZE,
                 Ranges.getSize().y * IMAGE_SIZE));
         add(panel);
+    }
+
+    private String getMessage() {
+        return switch (game.getState()) {
+            case PLAYED -> "Think twice!";
+            case BOMBED -> "YOU LOSE! BIG BA-DA-BOOM!";
+            case WINNER -> "CONGRATULATIONS!";
+        };
     }
 
     private void initFrame() {
