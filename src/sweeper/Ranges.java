@@ -40,11 +40,15 @@ public class Ranges {
     static ArrayList<Coord> getCoordsAround(Coord coord) {
         Coord around;
         ArrayList<Coord> list = new ArrayList<Coord>();
-        for (int x = coord.x - 1; x <= coord.x + 1; x++)
-            for (int y = coord.y - 1; y <= coord.y + 1; y++)
-                if (inRange(around = new Coord(x, y)))
-                    if (!around.equals(coord))
+        for (int x = coord.x - 1; x <= coord.x + 1; x++) {
+            for (int y = coord.y - 1; y <= coord.y + 1; y++) {
+                if (inRange(around = new Coord(x, y))) {
+                    if (!around.equals(coord)) {
                         list.add(around);
+                    }
+                }
+            }
+        }
         return list;
     }
 }
