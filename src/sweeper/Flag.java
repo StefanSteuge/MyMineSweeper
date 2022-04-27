@@ -20,9 +20,9 @@ class Flag {
     }
 
 
-    public void toggleFlagedToBox(Coord coord) {
+    public void toggleFlaggedToBox(Coord coord) {
         switch (flagMap.get(coord)) {
-            case FLAGED -> setClosedToBox(coord);
+            case FLAGGED -> setClosedToBox(coord);
             case CLOSED -> setFlagedToBox(coord);
         }
     }
@@ -32,7 +32,7 @@ class Flag {
     }
 
     private void setFlagedToBox(Coord coord) {
-        flagMap.set(coord, Box.FLAGED);
+        flagMap.set(coord, Box.FLAGGED);
     }
 
     int getCountOfCloseBoxes() {
@@ -49,17 +49,17 @@ class Flag {
         }
     }
 
-    void setNobombToFlagedSafeBox(Coord coord) {
-        if (flagMap.get(coord) == Box.FLAGED) {
-            flagMap.set(coord, Box.NOBOMB);
+    void setNo_bombToFlaggedSafeBox(Coord coord) {
+        if (flagMap.get(coord) == Box.FLAGGED) {
+            flagMap.set(coord, Box.NO_BOMB);
         }
     }
 
 
-    int getCountOfFlagedBoxesAround(Coord coord) {
+    int getCountOfFlaggedBoxesAround(Coord coord) {
         int count = 0;
         for (Coord around : Ranges.getCoordsAround(coord)){
-            if (flagMap.get(around) == Box.FLAGED){
+            if (flagMap.get(around) == Box.FLAGGED){
                 count++;
             }
         }

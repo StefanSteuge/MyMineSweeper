@@ -14,16 +14,17 @@ public enum Box {
     BOMB,
     OPENED,
     CLOSED,
-    FLAGED,
+    FLAGGED,
     BOMBED,
-    NOBOMB;
+    NO_BOMB;
 
     public Object image;
 
     Box getNextNumberBox() {
         return Box.values()[this.ordinal() + 1];
     }
-    int getNumber(){
+
+    int getNumber() {
         return this.ordinal();
     }
 }

@@ -1,7 +1,6 @@
 package sweeper;
 
 class Bomb {
-
     private Matrix bombMap;
     private int totalBombs;
 

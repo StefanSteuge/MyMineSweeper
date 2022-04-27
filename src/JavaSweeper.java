@@ -1,28 +1,28 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import sweeper.Box;
 import sweeper.Coord;
 import sweeper.Game;
 import sweeper.Ranges;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Objects;
+
 public class JavaSweeper extends JFrame {
-    private Game game;
+    private final Game game;
     private JPanel panel;
     private JLabel label;
-    private final int COLS = 9;
-    private final int ROWS = 9;
-    private final int BOMBS = 10;
     private final int IMAGE_SIZE = 50;
 
     public static void main(String[] args) {
-
         new JavaSweeper();
     }
 
     private JavaSweeper() {
+        int COLS = 9;
+        int ROWS = 9;
+        int BOMBS = 10;
         game = new Game(COLS, ROWS, BOMBS);
         game.start();
         setImages();
@@ -31,7 +31,7 @@ public class JavaSweeper extends JFrame {
         initFrame();
     }
 
-    private void initLabel(){
+    private void initLabel() {
         label = new JLabel("Welcome!");
         add(label, BorderLayout.SOUTH);
     }
@@ -54,14 +54,14 @@ public class JavaSweeper extends JFrame {
             public void mousePressed(MouseEvent e) {
                 int x = e.getX() / IMAGE_SIZE;
                 int y = e.getY() / IMAGE_SIZE;
-                Coord coord = new Coord(x,y);
-                if (e.getButton() == MouseEvent.BUTTON1){
+                Coord coord = new Coord(x, y);
+                if (e.getButton() == MouseEvent.BUTTON1) {
                     game.pressLeftButton(coord);
                 }
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     game.pressRightButton(coord);
                 }
-                if(e.getButton() == MouseEvent.BUTTON2){
+                if (e.getButton() == MouseEvent.BUTTON2) {
                     game.start();
                 }
                 label.setText(getMessage());
@@ -100,7 +100,7 @@ public class JavaSweeper extends JFrame {
 
     private Image getImage(String name) {
         String fileName = "img/" + name + ".png";
-        ImageIcon icon = new ImageIcon(getClass().getResource(fileName));
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource(fileName)));
         return icon.getImage();
     }
 

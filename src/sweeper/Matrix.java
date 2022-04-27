@@ -2,7 +2,7 @@ package sweeper;
 
 class Matrix {
 
-    private Box[][] matrix;
+    private final Box[][] matrix;
 
     Matrix(Box defaultBox) {
         matrix = new Box[Ranges.getSize().x][Ranges.getSize().y];
